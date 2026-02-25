@@ -1,20 +1,20 @@
 ---
-- name: Multi-Server Apache Deployment
-  hosts: webservers
+- name: Apache Web Server Deployment
+  hosts: all
   become: yes
   tasks:
-    - name: Apache Install karein
+    - name: 1. Apache (httpd) Install karein
       yum:
         name: httpd
         state: present
 
-    - name: Apache Service chalu karein
+    - name: 2. Apache Service ko Start aur Enable karein
       service:
         name: httpd
         state: started
         enabled: yes
 
-    - name: Web Page deploy karein
+    - name: 3. Custom Web Page deploy karein
       copy:
-        content: "<h1>Server {{ ansible_hostname }} is managed by Ansible</h1>"
+        content: "<h1>Ansible Magic! Deployed on {{ ansible_hostname }} ({{ ansible_default_ipv4.address }})</h1>"
         dest: /var/www/html/index.html
