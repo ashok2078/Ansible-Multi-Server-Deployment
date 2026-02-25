@@ -1,8 +1,20 @@
 ---
-- name: Test Ansible Deployment
+- name: Multi-Server Apache Deployment
   hosts: webservers
+  become: yes
   tasks:
-    - name: Create a test file
-      file:
-        path: /tmp/ansible_success.txt
-        state: touch
+    - name: Apache Install karein
+      yum:
+        name: httpd
+        state: present
+
+    - name: Apache Service chalu karein
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+
+    - name: Web Page deploy karein
+      copy:
+        content: "<h1>Server {{ ansible_hostname }} is managed by Ansible</h1>"
+        dest: /var/www/html/index.html
