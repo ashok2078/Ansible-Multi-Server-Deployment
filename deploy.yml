@@ -1,20 +1,20 @@
 ---
-- name: Apache Deployment on Multi-Server
-  hosts: all
-  become: yes
+- name: Apache Web Server Setup
+  hosts: node1
+  become: yes  # Iska matlab hai 'sudo' power use karna
   tasks:
-    - name: Install Apache
+    - name: 1. Apache (httpd) Package Install karein
       yum:
         name: httpd
         state: present
 
-    - name: Start Apache Service
+    - name: 2. Apache Service ko Start aur Enable karein
       service:
         name: httpd
         state: started
         enabled: yes
 
-    - name: Create Welcome Page
+    - name: 3. Ek simple Web Page banayein
       copy:
-        content: "<h1>Ansible is working on Node1!</h1>"
+        content: "<h1>Welcome to Ansible Managed Apache Server!</h1>"
         dest: /var/www/html/index.html
