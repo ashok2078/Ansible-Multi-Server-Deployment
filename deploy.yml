@@ -1,21 +1,4 @@
----
-- name: Apache Web Server Setup
-  hosts: node1
-  become: yes
-  tasks:
-    - name: 1. Apache Install karein
-      yum:
-        name: httpd
-        state: present
-
-    - name: 2. Apache Service Start karein
-      service:
-        name: httpd
-        state: started
-        enabled: yes
-
-    # PURANA TASK HATA KAR YEH LIKHEIN
-    - name: 3. Puri Portfolio Website Deploy karein
+- name: 3. Custom Portfolio Page Deploy karein
       template:
         src: index.html
         dest: /var/www/html/index.html
