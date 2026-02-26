@@ -1,4 +1,22 @@
-- name: 3. Custom Portfolio Page Deploy karein
-      template:
-        src: index.html
-        dest: /var/www/html/index.html
+---
+- name: GitHub se Live Website Deploy karein
+  hosts: node1
+  become: yes
+  tasks:
+    - name: 1. Git install karein
+      yum:
+        name: git
+        state: present
+
+    - name: 2. GitHub se fresh code pull karein
+      git:
+        repo: 'https://github.com/ashok2078/Ansible-Multi-Server-Deployment.git'
+        dest: /var/www/html/
+        force: yes
+      notify: Restart Apache  # Yeh sirf tabhi chalega jab code change hoga
+
+  handlers:
+    - name: Restart Apache
+      service:
+        name: httpd
+        state: restarted
